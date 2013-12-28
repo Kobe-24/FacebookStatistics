@@ -59,7 +59,8 @@
          // for any authentication related change, such as login, logout or session refresh. This means that
          // whenever someone who was previously logged out tries to log in again, the correct case below 
          // will be handled. 
-         FB.getLoginStatus(function (response) {
+         
+         function handleResponse(response) {
              if (response.status == "connected") {
                  // logged in and connected user, someone you know
                  get_friend_likes();
@@ -72,22 +73,11 @@
                    + '</fb:login-button>';
                  FB.XFBML.parse();
              }
-         });
+         }
 
-         FB.Event.subscribe('auth.login', function (response) {
-             if (response.status == "connected") {
-                 // logged in and connected user, someone you know
-                 get_friend_likes();
-                 document.getElementById('login').innerHTML
-                   = '<a href="#" onclick="FB.logout();">Logout</a><br/>';
-             } else {
-                 document.getElementById('login').innerHTML
-                   = '<fb:login-button show-faces="true" width="200"'
-                   + ' max-rows="1" perms="user_likes, friends_likes">'
-                   + '</fb:login-button>';
-                 FB.XFBML.parse();
-             }
-         });
+         FB.getLoginStatus(handleResponse);
+
+         FB.Event.subscribe('auth.login', handleResponse);
      };
  </script>
             <!--
