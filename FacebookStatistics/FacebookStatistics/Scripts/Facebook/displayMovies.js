@@ -39,25 +39,27 @@ function data_fetch_postproc() {
         movieListSorted[mCtr++].mCount = count;
     }
     var maxResults = 100;
-    if (movieListSorted.length < 100) {
+    if (movieListSorted.length < maxResults) {
         maxResults = movieListSorted.length;
     }
     movieListSorted.sort(popularMovies);
     document.getElementById('test').innerHTML = "";
+    
     for (i = 0; i < maxResults; i++) {
-        var newDiv = document.createElement("DIV");
-        newDiv.id = movieListSorted[i].id;
-        newDiv.innerHTML = movieListSorted[i].name + ' : Likes - '
+        var newElement = document.createElement("LI");
+        newElement.id = movieListSorted[i].id;
+        newElement.innerHTML = '<h5>'+ movieListSorted[i].name + '</h5>' + 'Likes: '
           + movieListSorted[i].mCount;
-        document.getElementById("movies").appendChild(newDiv);
+        document.getElementById("orderedList").appendChild(newElement);
+        
         FB.api('/' + movieListSorted[i].id, function (response) {
-            var newDiv = document.createElement("DIV");
-            newDiv.innerHTML = "<img src='" + response.picture + "'>"
+            var element = document.getElementById(response.id);
+            element.innerHTML += "<img src='" + response.picture + "'>"
               + "</img><br/>";
             if (response.link) {
-                newDiv.innerHTML += "<a href='" + response.link + "'>"
+                element.innerHTML += "<a href='" + response.link + "'>"
                   + response.link + "</a><br/>";
-                newDiv.innerHTML += '<iframe src='
+                element.innerHTML += '<iframe src='
                   + '"http://www.facebook.com/plugins/like.php?'
                   + 'href=' + response.link + '&amp;layout=standard'
                   + '&amp;show_faces=true&amp;'
@@ -67,10 +69,37 @@ function data_fetch_postproc() {
                   + 'border:none; overflow:hidden;'
                   + 'width:450px; height:80px;"'
                   + 'allowTransparency="true"></iframe><br/>';
-            }
-            document.getElementById(response.id).appendChild(newDiv);
+            }            
         });
     }
+
+    //for (i = 0; i < maxResults; i++) {
+    //    var newDiv = document.createElement("DIV");
+    //    newDiv.id = movieListSorted[i].id;
+    //    newDiv.innerHTML = movieListSorted[i].name + ' : Likes - '
+    //      + movieListSorted[i].mCount;
+    //    document.getElementById("movies").appendChild(newDiv);
+    //    FB.api('/' + movieListSorted[i].id, function (response) {
+    //        var newDiv = document.createElement("DIV");
+    //        newDiv.innerHTML = "<img src='" + response.picture + "'>"
+    //          + "</img><br/>";
+    //        if (response.link) {
+    //            newDiv.innerHTML += "<a href='" + response.link + "'>"
+    //              + response.link + "</a><br/>";
+    //            newDiv.innerHTML += '<iframe src='
+    //              + '"http://www.facebook.com/plugins/like.php?'
+    //              + 'href=' + response.link + '&amp;layout=standard'
+    //              + '&amp;show_faces=true&amp;'
+    //              + 'width=450&amp;action=like&amp;'
+    //              + 'colorscheme=light&amp;height=80"'
+    //              + 'scrolling="no" frameborder="0" style="'
+    //              + 'border:none; overflow:hidden;'
+    //              + 'width:450px; height:80px;"'
+    //              + 'allowTransparency="true"></iframe><br/>';
+    //        }
+    //        document.getElementById(response.id).appendChild(newDiv);
+    //    });
+    //}
 }
 function get_friend_likes() {
     document.getElementById('test').innerHTML = "Requesting "
