@@ -16,15 +16,13 @@
     </section>
 </asp:Content>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <h3>Movies</h3>
+    <h3>Movies that your friends like</h3>
+    <input id="movieButton" type="button" value="Movies"/>
+
     <ol id="orderedList" class="round">
     </ol>
-    
-    <input id="testButton" type="button" value="Test API"/>
-     <div id="fb-root"></div> 
-<%--<div id="login"></div> --%>
-<div id="test"></div> 
-<div id="movies"></div> 
+    <div id="fb-root"></div> 
+    <div id="temporaryOutput"></div> 
     
 <script src="Scripts/Facebook/displayMovies.js"  type="text/javascript"></script>  
 <script src="Scripts/Facebook/loadFaceBookSDK.js"  type="text/javascript"></script>   
@@ -47,7 +45,6 @@
          function handleResponse(response) {
              if (response.status == "connected") {
                  // logged in and connected user, someone you know
-                 get_friend_likes();
                  document.getElementById('login').innerHTML
                    = '<a href="#" onclick="FB.logout();">Logout</a><br/>';
              } else {
