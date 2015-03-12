@@ -1,5 +1,0 @@
-http://mashable.com/2007/05/02/10-awesome-things-built-on-the-facebook-api/
-
-
-
-http://webmodelling.com/webbits/socialmedia/facebook-api.aspx?error=access_denied&error_code=200&error_description=Permissions+error&error_reason=user_denied#_=_
